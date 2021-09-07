@@ -1,0 +1,27 @@
+en.say("Start speaking the name.")
+en.runAndWait()
+nam = text = ""
+i = 1
+while not(text)==("over" or "restart" or "stop"):
+    en.say("Speak the character number {}".format(i))
+    en.runAndWait()
+    f=0
+    i+=1
+    nam = nam + text
+    while f==0:
+        with sr.Microphone() as source:
+            audio_text = r.listen(source,timeout=3,phrase_time_limit=3)
+            try:
+                # using google speech recognition
+                print("Text: "+r.recognize_google(audio_text))
+                text=r.recognize_google(audio_text)
+                f=1
+                #engine = pyttsx3.init()
+                en.say(text)
+                en.runAndWait()
+                if not(len(text))==1:
+                    f=0
+                    en.say("Speak again.")
+            except:
+                en.say("Sorry, I did not get that. Speak again.")
+                f=0
